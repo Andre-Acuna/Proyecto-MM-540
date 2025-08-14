@@ -1,7 +1,15 @@
+import { useState } from 'react';
 import { usePanel } from '../context/PanelContext';
 
 const PanelLogin = () => {
-  const { loginPanelOpen, login, toggleLoginPanel } = usePanel();
+  const { loginPanelOpen, login, toggleLoginPanel, loginError } = usePanel();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(username, password);
+  }
 
   return (
     <>
@@ -24,15 +32,19 @@ const PanelLogin = () => {
             <input 
               type="text" 
               placeholder="Usuario" 
+              value = {username}
+              onChange={(e) => setUsername(e.target.value)}
               className="w-full px-4 py-2 bg-[#FDEECD] border rounded"
             />
             <input 
               type="password" 
               placeholder="Contraseña" 
+              value = {password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 bg-[#FDEECD] border rounded"
             />
             <button
-              onClick={login}
+              onClick={handleSubmit}
               className="w-full py-2 bg-[#D24858] text-[#493831] font-semibold rounded hover:bg-[#EA8676]"
             >
               Entrar
